@@ -1,118 +1,80 @@
 {
   "version": "1.0",
-  "framework": "angular-material-m3",
+  "framework": "tailwind",
   "angularVersion": "17.3",
 
   "imports": {
-    "description": "Standard Angular Material imports for a typical CRUD component",
+    "description": "Standard Angular imports for a Tailwind CRUD component",
     "component": [
-      "MatTableModule",
-      "MatPaginatorModule",
-      "MatSortModule",
-      "MatFormFieldModule",
-      "MatInputModule",
-      "MatButtonModule",
-      "MatIconModule",
-      "MatCardModule",
-      "MatSelectModule",
-      "MatToolbarModule",
-      "MatProgressSpinnerModule",
-      "MatSnackBarModule",
-      "MatDialogModule",
-      "MatTooltipModule",
-      "MatDividerModule",
       "CommonModule",
       "FormsModule",
       "ReactiveFormsModule"
     ],
     "nav": [
-      "MatToolbarModule",
-      "MatSidenavModule",
-      "MatListModule",
-      "MatIconModule",
-      "MatButtonModule",
       "CommonModule",
       "RouterLink",
       "RouterLinkActive"
     ],
     "home": [
-      "MatCardModule",
-      "MatButtonModule",
-      "MatIconModule",
-      "MatGridListModule",
       "CommonModule",
       "RouterLink"
     ]
   },
 
   "button": {
-    "primary": "<button mat-raised-button color=\"primary\">Label</button>",
-    "secondary": "<button mat-stroked-button color=\"primary\">Label</button>",
-    "icon": "<button mat-icon-button color=\"primary\" matTooltip=\"Tooltip\"><mat-icon>icon_name</mat-icon></button>",
-    "fab": "<button mat-fab color=\"primary\"><mat-icon>add</mat-icon></button>",
-    "miniFab": "<button mat-mini-fab color=\"primary\"><mat-icon>add</mat-icon></button>"
+    "primary": "<button class=\"bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded\">Label</button>",
+    "secondary": "<button class=\"bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded\">Label</button>",
+    "danger": "<button class=\"bg-red-600 hover:bg-red-700 text-white text-sm py-1 px-3 rounded\">Delete</button>",
+    "icon": "<button class=\"text-blue-600 hover:text-blue-800 p-1\" title=\"Tooltip\">✏️</button>"
   },
 
   "input": {
-    "text": "<mat-form-field appearance=\"outline\" class=\"full-width\">\n  <mat-label>Label</mat-label>\n  <input matInput [(ngModel)]=\"model.field\" name=\"field\" required>\n  <mat-error>Field is required</mat-error>\n</mat-form-field>",
-    "select": "<mat-form-field appearance=\"outline\" class=\"full-width\">\n  <mat-label>Label</mat-label>\n  <mat-select [(ngModel)]=\"model.field\" name=\"field\" required>\n    <mat-option *ngFor=\"let opt of options\" [value]=\"opt.value\">{{ opt.label }}</mat-option>\n  </mat-select>\n</mat-form-field>",
-    "date": "<mat-form-field appearance=\"outline\" class=\"full-width\">\n  <mat-label>Date</mat-label>\n  <input matInput type=\"date\" [(ngModel)]=\"model.dateField\" name=\"dateField\">\n</mat-form-field>",
-    "textarea": "<mat-form-field appearance=\"outline\" class=\"full-width\">\n  <mat-label>Label</mat-label>\n  <textarea matInput [(ngModel)]=\"model.field\" name=\"field\" rows=\"3\"></textarea>\n</mat-form-field>"
+    "text": "<div class=\"mb-4\">\n  <label class=\"block text-sm font-medium text-gray-700 mb-1\">Label</label>\n  <input type=\"text\" class=\"w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500\" [(ngModel)]=\"model.field\" name=\"field\" required>\n</div>",
+    "select": "<div class=\"mb-4\">\n  <label class=\"block text-sm font-medium text-gray-700 mb-1\">Label</label>\n  <select class=\"w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500\" [(ngModel)]=\"model.field\" name=\"field\" required>\n    <option *ngFor=\"let opt of options\" [value]=\"opt.value\">{{ opt.label }}</option>\n  </select>\n</div>",
+    "date": "<div class=\"mb-4\">\n  <label class=\"block text-sm font-medium text-gray-700 mb-1\">Date</label>\n  <input type=\"date\" class=\"w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500\" [(ngModel)]=\"model.dateField\" name=\"dateField\">\n</div>",
+    "textarea": "<div class=\"mb-4\">\n  <label class=\"block text-sm font-medium text-gray-700 mb-1\">Label</label>\n  <textarea class=\"w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500\" [(ngModel)]=\"model.field\" name=\"field\" rows=\"3\"></textarea>\n</div>"
   },
 
   "table": {
-    "description": "mat-table with sort, filter and paginator – replaces Bootstrap table",
-    "typescript": "import { AfterViewInit, ViewChild } from '@angular/core';\nimport { MatTableDataSource } from '@angular/material/table';\nimport { MatPaginator } from '@angular/material/paginator';\nimport { MatSort } from '@angular/material/sort';\n\n// In component class:\ndisplayedColumns: string[] = ['col1', 'col2', 'actions'];\ndataSource = new MatTableDataSource<Entity>();\n\n@ViewChild(MatPaginator) paginator!: MatPaginator;\n@ViewChild(MatSort) sort!: MatSort;\n\nngAfterViewInit(): void {\n  this.dataSource.paginator = this.paginator;\n  this.dataSource.sort = this.sort;\n}\n\napplyFilter(event: Event): void {\n  const filterValue = (event.target as HTMLInputElement).value;\n  this.dataSource.filter = filterValue.trim().toLowerCase();\n}",
-    "html": "<mat-form-field appearance=\"outline\">\n  <mat-label>Filter</mat-label>\n  <input matInput (keyup)=\"applyFilter($event)\" placeholder=\"Search...\">\n  <mat-icon matSuffix>search</mat-icon>\n</mat-form-field>\n\n<div class=\"mat-elevation-z2\">\n  <table mat-table [dataSource]=\"dataSource\" matSort class=\"full-width-table\">\n\n    <!-- Column definition -->\n    <ng-container matColumnDef=\"col1\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Column 1</th>\n      <td mat-cell *matCellDef=\"let row\">{{ row.col1 }}</td>\n    </ng-container>\n\n    <!-- Actions column -->\n    <ng-container matColumnDef=\"actions\">\n      <th mat-header-cell *matHeaderCellDef>Actions</th>\n      <td mat-cell *matCellDef=\"let row\">\n        <button mat-icon-button color=\"primary\" (click)=\"selectForEdit(row)\" matTooltip=\"Edit\">\n          <mat-icon>edit</mat-icon>\n        </button>\n        <button mat-icon-button color=\"warn\" (click)=\"delete(row.id!)\" matTooltip=\"Delete\">\n          <mat-icon>delete</mat-icon>\n        </button>\n      </td>\n    </ng-container>\n\n    <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n    <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    <tr class=\"mat-row\" *matNoDataRow>\n      <td class=\"mat-cell\" [attr.colspan]=\"displayedColumns.length\">No data found.</td>\n    </tr>\n  </table>\n\n  <mat-paginator [pageSizeOptions]=\"[10, 25, 50]\" showFirstLastButtons></mat-paginator>\n</div>"
+    "description": "Tailwind table with striped rows",
+    "html": "<div class=\"overflow-x-auto\">\n  <table class=\"min-w-full bg-white border border-gray-200 rounded-lg\">\n    <thead class=\"bg-gray-50\">\n      <tr>\n        <th class=\"px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Column 1</th>\n        <th class=\"px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Actions</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-gray-200\">\n      <tr *ngFor=\"let item of items; let i = index\" [class.bg-gray-50]=\"i % 2 === 1\">\n        <td class=\"px-4 py-3 text-sm text-gray-900\">{{ item.col1 }}</td>\n        <td class=\"px-4 py-3 text-sm\">\n          <button class=\"text-blue-600 hover:text-blue-800 mr-2\" (click)=\"selectForEdit(item)\">Edit</button>\n          <button class=\"text-red-600 hover:text-red-800\" (click)=\"delete(item.id!)\">Delete</button>\n        </td>\n      </tr>\n      <tr *ngIf=\"items.length === 0\">\n        <td colspan=\"2\" class=\"px-4 py-3 text-center text-sm text-gray-500\">No data found.</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
   },
 
   "card": {
-    "basic": "<mat-card>\n  <mat-card-header>\n    <mat-card-title>Title</mat-card-title>\n    <mat-card-subtitle>Subtitle</mat-card-subtitle>\n  </mat-card-header>\n  <mat-card-content>\n    <!-- content -->\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-raised-button color=\"primary\">Action</button>\n  </mat-card-actions>\n</mat-card>",
-    "form": "<mat-card>\n  <mat-card-header>\n    <mat-card-title>{{ selectedItem?.id ? 'Edit' : 'New' }} Entity</mat-card-title>\n  </mat-card-header>\n  <mat-card-content>\n    <form #form=\"ngForm\" (ngSubmit)=\"save()\">\n      <!-- mat-form-field inputs here -->\n    </form>\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-raised-button color=\"primary\" (click)=\"save()\" [disabled]=\"form.invalid\">Save</button>\n    <button mat-stroked-button (click)=\"reset()\">Cancel</button>\n  </mat-card-actions>\n</mat-card>"
-  },
-
-  "dialog": {
-    "open": "const dialogRef = this.dialog.open(ConfirmDialogComponent, {\n  width: '400px',\n  data: { title: 'Confirm Delete', message: 'Are you sure?' }\n});\ndialogRef.afterClosed().subscribe(result => {\n  if (result) { this.performDelete(id); }\n});",
-    "confirmDelete": "// Simpler alternative – browser confirm:\nif (confirm('Delete this item?')) {\n  this.service.delete(id).subscribe(() => this.loadAll());\n}"
-  },
-
-  "snackbar": {
-    "success": "this.snackBar.open('Saved successfully!', 'Close', { duration: 3000, panelClass: 'snack-success' });",
-    "error": "this.snackBar.open('An error occurred.', 'Close', { duration: 5000, panelClass: 'snack-error' });"
+    "basic": "<div class=\"bg-white rounded-lg shadow p-6\">\n  <h3 class=\"text-lg font-semibold text-gray-800 mb-2\">Title</h3>\n  <p class=\"text-gray-600\">Content</p>\n  <button class=\"mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded\">Action</button>\n</div>",
+    "form": "<div class=\"bg-white rounded-lg shadow p-6\">\n  <h3 class=\"text-lg font-semibold text-gray-800 mb-4\">{{ selectedItem?.id ? 'Edit' : 'New' }} Entity</h3>\n  <form #form=\"ngForm\" (ngSubmit)=\"save()\">\n    <!-- inputs here -->\n    <div class=\"flex gap-2 mt-4\">\n      <button type=\"submit\" class=\"bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded\" [disabled]=\"form.invalid\">Save</button>\n      <button type=\"button\" class=\"bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded\" (click)=\"reset()\">Cancel</button>\n    </div>\n  </form>\n</div>"
   },
 
   "navbar": {
-    "description": "mat-toolbar top bar + optional mat-sidenav for navigation",
-    "typescript": "import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';\nimport { MatSidenav } from '@angular/material/sidenav';\n\n@ViewChild('sidenav') sidenav!: MatSidenav;\nisMobile = false;\n\nconstructor(private breakpointObserver: BreakpointObserver) {}\n\nngOnInit(): void {\n  this.breakpointObserver.observe([Breakpoints.Handset])\n    .subscribe(result => {\n      this.isMobile = result.matches;\n      if (!this.isMobile) { this.sidenav.open(); }\n    });\n}",
-    "html": "<mat-sidenav-container class=\"full-height\">\n  <mat-sidenav #sidenav [mode]=\"isMobile ? 'over' : 'side'\" [opened]=\"!isMobile\">\n    <mat-nav-list>\n      <a mat-list-item routerLink=\"/home\" routerLinkActive=\"active\">\n        <mat-icon matListItemIcon>home</mat-icon>\n        <span matListItemTitle>Home</span>\n      </a>\n      <!-- NAV_ITEMS -->\n    </mat-nav-list>\n  </mat-sidenav>\n\n  <mat-sidenav-content>\n    <mat-toolbar color=\"primary\">\n      <button mat-icon-button *ngIf=\"isMobile\" (click)=\"sidenav.toggle()\">\n        <mat-icon>menu</mat-icon>\n      </button>\n      <span>APP_TITLE</span>\n    </mat-toolbar>\n    <div class=\"page-container\">\n      <router-outlet></router-outlet>\n    </div>\n  </mat-sidenav-content>\n</mat-sidenav-container>"
+    "description": "Tailwind navbar with responsive hamburger",
+    "html": "<nav class=\"bg-blue-600 text-white px-6 py-4\">\n  <div class=\"flex items-center justify-between\">\n    <a routerLink=\"/home\" class=\"text-xl font-bold hover:text-blue-200\">App</a>\n    <ul class=\"flex gap-6\">\n      <li><a routerLink=\"/home\" routerLinkActive=\"underline\" class=\"hover:text-blue-200\">Home</a></li>\n      <!-- NAV_ITEMS -->\n    </ul>\n  </div>\n</nav>"
   },
 
   "listView": {
-    "description": "Full list-view layout: filter + table + paginator + form card side-by-side",
-    "layout": "Two-column layout: left col (~65%) = table, right col (~35%) = form card (hidden when nothing selected)",
-    "html": "<div class=\"page-container\">\n  <div class=\"flex-row mb-2\">\n    <h2>ENTITY_PLURAL</h2>\n    <span class=\"flex-spacer\"></span>\n    <button mat-raised-button color=\"primary\" (click)=\"startCreate()\">\n      <mat-icon>add</mat-icon> New ENTITY\n    </button>\n  </div>\n\n  <div style=\"display: flex; gap: 24px; align-items: flex-start;\">\n\n    <!-- Table column -->\n    <div style=\"flex: 1 1 65%;\">\n      <!-- mat-table snippet here -->\n    </div>\n\n    <!-- Form card column -->\n    <div style=\"flex: 0 0 35%;\" *ngIf=\"selectedItem\">\n      <!-- mat-card form snippet here -->\n    </div>\n\n  </div>\n</div>"
+    "description": "Two-column Tailwind layout: table left, form right",
+    "html": "<div class=\"p-6\">\n  <div class=\"flex items-center justify-between mb-4\">\n    <h2 class=\"text-2xl font-bold text-gray-800\">ENTITY_PLURAL</h2>\n    <button class=\"bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded\" *ngIf=\"!selectedItem\" (click)=\"startCreate()\">+ New ENTITY</button>\n  </div>\n  <div class=\"flex gap-6 items-start\">\n    <div class=\"flex-1\"><!-- Tailwind table here --></div>\n    <div class=\"w-1/3\" *ngIf=\"selectedItem\"><!-- Tailwind card form here --></div>\n  </div>\n</div>"
   },
 
   "promptHints": {
-    "description": "Rules the AI MUST follow when generating Angular Material components",
+    "description": "Rules the AI MUST follow when generating Tailwind CSS Angular components",
     "rules": [
-      "ALWAYS use Angular Material components. NEVER use bare HTML elements (<table>, <input>, <button>, <select>).",
-      "Use mat-table with MatTableDataSource, MatPaginator, MatSort for all lists.",
-      "Use mat-form-field with appearance='outline' for all form inputs.",
-      "Use mat-raised-button color='primary' for primary actions, mat-stroked-button for secondary.",
-      "Use mat-icon-button with matTooltip for inline table actions (edit/delete).",
-      "Use mat-card as content container for forms and detail views.",
-      "Use mat-toolbar color='primary' for the navigation bar.",
-      "Spacing: use CSS variables --spacing-1 (8px) through --spacing-6 (48px) or the utility classes (mt-2, mb-3, p-3, gap-2, etc.) from styles.scss.",
-      "Use mat-snack-bar for success/error feedback instead of alert().",
-      "Import only the specific MatXxxModule needed – do NOT import MatLegacyXxxModule.",
+      "ALWAYS use Tailwind CSS utility classes. NEVER use Bootstrap, Angular Material, or bare unstyled HTML.",
+      "Container: <div class=\"p-6\"> or <div class=\"max-w-7xl mx-auto p-6\"> for page content.",
+      "Table: <table class=\"min-w-full bg-white border border-gray-200 rounded-lg\"> with <thead class=\"bg-gray-50\"> and <tbody class=\"divide-y divide-gray-200\">.",
+      "Primary button: class=\"bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded\"",
+      "Secondary button: class=\"bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded\"",
+      "Danger button: class=\"bg-red-600 hover:bg-red-700 text-white text-sm py-1 px-3 rounded\"",
+      "Form inputs: class=\"w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500\"",
+      "Labels: <label class=\"block text-sm font-medium text-gray-700 mb-1\">",
+      "Form group wrapper: <div class=\"mb-4\">",
+      "Card for forms: <div class=\"bg-white rounded-lg shadow p-6\">",
+      "Two-column layout: <div class=\"flex gap-6 items-start\"> with <div class=\"flex-1\"> and <div class=\"w-1/3\">",
+      "Use browser confirm() for delete confirmation.",
       "All components must be standalone: true.",
-      "Use MatTableDataSource for reactive filtering and pagination.",
-      "Apply class='full-width' on mat-form-field inside cards (ensure 100% width).",
-      "Apply class='full-width-table' on mat-table elements.",
-      "Use mat-icon names from Material Icons: https://fonts.google.com/icons",
-      "For delete confirmation: use confirm() browser dialog or mat-dialog – no custom modal HTML.",
-      "NEVER import Angular Material from @angular/material/legacy-* paths."
+      "NgModel binding: [(ngModel)]=\"selectedItem.field\" — always add name attribute.",
+      "NEVER use mat-* elements, Bootstrap classes (btn, col-md-*, etc.), or PrimeNG/Ionic components.",
+      "NEVER import Angular Material from @angular/material.",
+      "Striped table rows: use [class.bg-gray-50]=\"i % 2 === 1\" with let i = index in *ngFor."
     ]
   }
 }

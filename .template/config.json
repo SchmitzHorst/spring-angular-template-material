@@ -1,19 +1,10 @@
 {
-  "id": "material-m3",
-  "displayName": "Angular Material M3",
-  "description": "Google Material Design 3 – modern, clean, enterprise-ready",
-  "cssFramework": "angular-material",
-  "styleType": "scss",
-  "budgetWarningKb": 1000,
-  "budgetErrorKb": 2000,
-  "angularVersion": "17.3",
-  "materialVersion": "17.3",
-  "themeApi": "M2",
-  "theme": {
-    "primary": "indigo",
-    "accent": "cyan",
-    "warn": "red",
-    "typography": "Roboto"
-  },
+  "id": "tailwind",
+  "displayName": "Tailwind CSS",
+  "description": "Tailwind CSS 3 – utility-first, modern, flexibel",
+  "cssFramework": "tailwind",
+  "styleType": "css",
+  "budgetWarningKb": 600,
+  "budgetErrorKb": 1200,
   "excludeOnClone": [".template"]
 }
